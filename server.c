@@ -8,6 +8,7 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include "manip_chaines.h"
 
 #define PORT 5000  //on definit le port sur lequel le cient il va se connecter au serveur
 #define BACKLOG 10
@@ -22,9 +23,11 @@ int main(int argc, char *argv[])
     //taille de buffer
     char buffer[10241];
     char *buff;
-//  memset(buffer,0,sizeof(buffer));
+	//  memset(buffer,0,sizeof(buffer));
     int yes =1;
-
+	// struct parsing
+	irc_msg *message=NULL;
+	message=(irc_msg*)malloc(sizeof(irc_msg));
  
     //creation de socket 
     if ((socket_fd = socket(AF_INET, SOCK_STREAM, 0))== -1) {
@@ -71,9 +74,11 @@ int main(int argc, char *argv[])
 		       * nick_name 
 		       * real_name
 		       */
-        if ((num = recv(client_fd, buffer, 10240,0))== -1) {
+        if ((num = recv(client_fd, buffer, 512,0))== -1) {
             //fprintf(stderr,"Error in receiving message!!\n");
             perror("recv");
+            parse_message(buffer,message);
+			printf("prefix:%s  \n ident_name : %s , ident_user: %s ident_host:%s \n command: %s \n, pram: %s \n, nparam: %d \n trailing: %s",message->prefix,message->ident[name],message->ident[user],message->ident[host],message->command,message->param[0],message->nparams,message->trailing );
             exit(1);
         }  
         else if (num == 0) {
