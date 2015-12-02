@@ -24,32 +24,39 @@
     {
 		/* if empty string was passed to the function */
 		if(msg_string[0] == 0 || msg_string == NULL) return 0;
-  
+		/*Initialize message structure*/
 		memset(message, 0, sizeof(*message));
   
 		char *tmp, *prefix = NULL;
         char *ptr = strncpy(message->raw, msg_string, 512);
   
-		/* prefix & command */
+		/*****************************
+		 *  prefix & command Parsing *
+		 *****************************/
+		/*replace the fist " " with "\0" */
 		ptr = strtok(ptr, " ");
         if(*ptr != ':') message->command = ptr; // if we don't have prefix we parse command
         else {
-            prefix = ptr + 1; // we parse prefix which start after ":"
+			/*parse prefix which start after ":"*/
+            prefix = ptr + 1;
+            /*then parse command ( NULL takes the last string used*/
             message->command = strtok(NULL, " ");
         }
   
         /* check if there is a command */
         if(message->command == NULL) return 0; /* NO COMMAND, NOT OK! */
   
-        /* trailing */
+        /* trailing (last part) : optionnal */
         ptr = strtok(NULL, ""); /* \r\n ? */
         if(ptr != NULL)
         {
+			/*if the first car in ptr is ":" = trailing*/
             if(*ptr == ':')
             {
                 message->trailing = ptr + 1;
                 ptr = NULL;
             }
+            /*look for ":" and copy it in tmp*/
             else
             {
                 tmp = strstr(ptr, " :");
@@ -81,14 +88,17 @@
             tmp = strtok(prefix, "!");
             if(tmp != NULL)
             {
-                message->ident[name] = tmp;
+				/*save the name*/
+                message->ident[name] = tmp; 
     
                 tmp = strtok(NULL, "@");
                 if(tmp != NULL)
                 {
+					/*we save the username*/
                     message->ident[user] = tmp;
    
                     tmp = strtok(NULL, "");
+                    /*we save the hostname*/
                     if(tmp != NULL) message->ident[host] = tmp;
                 }
             }

@@ -2,7 +2,7 @@
 	#include "manip_chaines.h"
 	
 	int main (void){
-		irc_msg *message=NULL;
+		irc_msg *message=NULL;// On crée notre structure de parsing du msg
 		message=(irc_msg*)malloc(sizeof(irc_msg));
 		char msg_string[]=":nick!~hamza@server PRIVMSG #channelisty :apparament ça marche !";
 		parse_message(msg_string,message);
