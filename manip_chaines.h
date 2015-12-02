@@ -1,24 +1,23 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 #ifndef MANIP_CHAINES_H
 #define MANIP_CHAINES_H
-	#include <stdio.h>
-	#include <stdlib.h>
-	#include <string.h>
-	#define MAX_PARAMS 15
+#define MAX_PARAMS 15
+
+#include "struct_user_channel.h"
+
+//FONCTION
+int manip_chaines(char * msg_string);
+
 	enum PREFIX_ITEMS
 	{
       name = 0,
-      user = 1,
+      user1 = 1,
       host = 2
 	};
-	typedef struct {
-      char    raw[512];       /* raw copy of the original message           */
-      char    *prefix;        /* pointer to prefix                          */
-      char    *ident[3];      /* arrays devided prefix (name, user, host)   */
-      char    *command;       /* pointer to command                         */
-      char    *param[15];     /* array of pointer to parsed params          */
-      int     nparams;        /* numnber of params                          */
-      char    *trailing;      /* pointer to trialing                        */
-  } irc_msg;
+	
 
 	int parse_message(char *msg_string, irc_msg *message)
     {
@@ -86,7 +85,7 @@
                 tmp = strtok(NULL, "@");
                 if(tmp != NULL)
                 {
-                    message->ident[user] = tmp;
+                    message->ident[user1] = tmp;
    
                     tmp = strtok(NULL, "");
                     if(tmp != NULL) message->ident[host] = tmp;

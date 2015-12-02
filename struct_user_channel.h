@@ -1,66 +1,79 @@
 
-/* 
- *
- *
- *
- *
- *
- *
- *
- *
- *
- */
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/stat.h>
+//#include "init.h"
 
-#ifndef STRUCT_USER_CHANNEL_H_INCLUDED
-#define STRUCT_USER_CHANNEL_H_INCLUDED
+#ifndef STRUCT_USER_CHANNEL_H
+#define STRUCT_USER_CHANNEL_H
 
-#include "init.h"
 
-/************************************
- *			   Structures			*
- ***********************************/
-
-/* Structure channel */
-typedef struct channel {
-	int id;
-	char * name = NULL;
-	tlistU * userlist;
-	int view;
-} channel;
+typedef struct {
+      char    raw[512];       /* raw copy of the original message           */
+      char    *prefix;        /* pointer to prefix                          */
+      char    *ident[3];      /* arrays devided prefix (name, user, host)   */
+      char    *command;       /* pointer to command                         */
+      char    *param[15];     /* array of pointer to parsed params          */
+      int     nparams;        /* numnber of params                          */
+      char    *trailing;      /* pointer to trialing                        */
+  } irc_msg;
+  
 
 /* Structure user */
 typedef struct user {
-	int id;
-	char * nickname = NULL;
-	char * username = NULL;
-	char * realname = NULL;
+	int  *id;
+	char *nickname;
+	char *username;
+	char *realname;
 	int channel;
-	char * password = NULL;
-} user;
-
-/* Channel in a linked list of channels */
-typedef struct tchannel {
-	channel * channel;
-	struct tchannel * next;
-} tchanel;
+	char *password;
+}user;
 
 /* User in a linked list of users */
 typedef struct tuser {
 	user * user;
 	struct tuser * next;
-} tuser;
-
-/* List of channels */
-typedef struct tlistC {
-	tchannel * first;
-	tchannel * last;
-} tlistC;
+}tuser;
 
 /* List of users */
 typedef struct tlistU {
 	tuser * first;
 	tuser * last;
 } tlistU;
+
+/* Structure channel */
+typedef struct channel {
+	int id;
+	char * name ;
+	tlistU * userlist;
+	int view;
+}channel;
+
+/* Channel in a linked list of channels */
+typedef struct tchannel {
+	channel * channel;
+	struct tchannel * next;
+}tchannel;
+
+
+/* List of channels */
+typedef struct tlistC {
+	tchannel * first;
+	tchannel * last;
+}tlistC;
+
+
+
+
+
+
+
+
+
+
+
+
 
 /************************************
  *    User manipulation methods		*
@@ -71,7 +84,7 @@ typedef struct tlistU {
  * Return 	: pointer on user		*
  * Args 	: int, id of user		*
  ***********************************/
-user * create_user(int);
+user create_user(char *msg_command,char *msg_param);
 
 /****************************************
  * To delete an user					*
@@ -104,7 +117,7 @@ int update_password_user(int, char*);
  * Return 	: pointer on channel	*
  * Args 	: int, id of channel	*
  ***********************************/
-channel * create_channel(int);
+channel create_channel(int);
 
 /****************************************
  * To delete a channel					*
@@ -133,16 +146,16 @@ int update_view_channel(int, int);
 
 /* Insert an element in the linked list */
 /*          Always at the end           */
-void add(tlistC * lc, channel * c);
-void add(tlistU * lu, user    * u);
+void add(tlistC * lc,channel * c);
+void add1(tlistU * lu, user * u);
 
 /* Delete an element in the linked list */
 void del(tlistC * lc, channel * c);
-void del(tlistU * lu, user    * u);
+void del1(tlistU * lu, user * u);
 
 /* Search an element in the linked list */
 channel search(channel * lc, channel * c); // or by the ID ?
-user    search(user    * lu, user    * u); // or by the ID ?
+user    search1(user    * lu, user    * u); // or by the ID ?
 
 /* Sort the linked list by name or ID */
 
