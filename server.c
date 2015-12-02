@@ -8,26 +8,30 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
-#include "manip_chaines.h"
 
-#define PORT 5000  //on definit le port sur lequel le cient il va se connecter au serveur
+
+
+#define PORT 6667  //on definit le port sur lequel le cient il va se connecter au serveur
 #define BACKLOG 10
+
+#include "struct_user_channel.h"
+#include "manip_chaines.h"
 
 int main(int argc, char *argv[])
 {
+	
 	/*paramètre de connection au client */
     struct sockaddr_in server;
     struct sockaddr_in dest;
     int socket_fd, client_fd,num;
     socklen_t size;
-    //taille de buffer
     char buffer[10241];
-    char *buff;
-	//  memset(buffer,0,sizeof(buffer));
+    char buff[3000];
+    
+    //memset(buffer,0,sizeof(buffer));
     int yes =1;
-	// struct parsing
-	irc_msg *message=NULL;
-	message=(irc_msg*)malloc(sizeof(irc_msg));
+    //char baf[13];
+
  
     //creation de socket 
     if ((socket_fd = socket(AF_INET, SOCK_STREAM, 0))== -1) {
@@ -56,8 +60,10 @@ int main(int argc, char *argv[])
         fprintf(stderr, "Listening Failure\n");
         exit(1);
     }
+    
    // dans le cas ou il ya des appels on attentes on passe pour les étapes suivantes
     while(1) {
+		
         size = sizeof(struct sockaddr_in); 
          //on va accepter la connection de client ( client irssi ) 
         if ((client_fd = accept(socket_fd, (struct sockaddr *)&dest, &size))==-1) {
@@ -65,46 +71,56 @@ int main(int argc, char *argv[])
             perror("accept");
             exit(1);
         }
+        
+        // envoyer ça en buffer comme quoi la connexion est faite 
         printf("Server got connection from client %s\n", inet_ntoa(dest.sin_addr));
-        //buffer = "Hello World!! I am networking!!\n";
-
-        while(1) {
-			/*on recoit le buffer du client tous ce qui est peut etre envoyé par client et on l'affiche aprés
-		     par example dans le cas de irssi on recoit dés la connection on va recevoir :
-		       * nick_name 
-		       * real_name
-		       */
-        if ((num = recv(client_fd, buffer, 512,0))== -1) {
+        
+        
+        //verifier la disponibilté de nickname il est pas utulisé
+        
+      while(1) {
+	
+        if ((num = recv(client_fd, buffer, 10240,0))== -1) {
             //fprintf(stderr,"Error in receiving message!!\n");
             perror("recv");
-            parse_message(buffer,message);
-			printf("prefix:%s  \n ident_name : %s , ident_user: %s ident_host:%s \n command: %s \n, pram: %s \n, nparam: %d \n trailing: %s",message->prefix,message->ident[name],message->ident[user],message->ident[host],message->command,message->param[0],message->nparams,message->trailing );
             exit(1);
         }  
         else if (num == 0) {
             printf("Connection closed\n");
             return 0;
-        }
-    //  num = recv(client_fd, buffer, sizeof(buffer),0);
-        buffer[num] = '\0';
-        printf("Message received: %s\n", buffer);
-        }
+        }else{
+			            
+       // if(send(client_fd,buff, strlen(buff),0)) {
+		 //   buff="001"
+        recv(client_fd,buffer, sizeof(buffer),50000);
+         //buffer[num] = 'a';
+         //printf("%s \n", buffer);
+        
+        // on fait l'appel à la fontction de manipulation de chaine pour récuperer les paramètre   
+        //manip_chaines(buffer); <----- à modifer pour faire aapele de fonction 
+        
 
-    buff = "I am communicating with the client!!\n";
-        // envoyer un message de server vers le client ( on recoit message de client et on le transmet selon les channels) 
-        if ((send(client_fd,buff, strlen(buff),0))== -1) {
-        fprintf(stderr, "Failure Sending Message\n");
-        close(client_fd);
-        exit(1);
-    }
-    else {
-        printf("Message being sent: %s\nNumber of bytes sent:\n",buff);
-    }
+	    irc_msg *message=NULL;
+		message=(irc_msg*)malloc(sizeof(irc_msg));
+		//msg_string[]=":nick!~hamza@server PRIVMSG #channelisty :apparament ça marche !";
+		parse_message(buffer,message);
+		
+		printf("prefix:%s  \n ident_name : %s , ident_user: %s ident_host:%s \n command: %s \n, pram: %s \n, nparam: %d \n trailing: %s",message->prefix,message->ident[name],message->ident[user1],message->ident[host],message->command,message->param[0],message->nparams,message->trailing );
+		
+        strcpy(buff,"001");
+        // on envoi 001 pour le client pour ---> mode +i l'utulisateur est reconnue que par les utulisateur de meme channel avec /who or 
+        // whois
+        send(client_fd,(char *)buff, sizeof(buff), 0);
+        
+        create_user(message->command,message->param[0]);
 
-        close(client_fd);  
-        close(socket_fd);  
-        //return 0;
+      
+	}
+	
+       }
+        
+
+     
     }
-    //close(client_fd);
-    return 0;
+ return 0;
 }

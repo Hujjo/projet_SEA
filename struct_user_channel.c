@@ -1,4 +1,7 @@
-
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/stat.h>
 /* 
  *
  *
@@ -10,7 +13,8 @@
  *
  *
  */
-
+#include "struct_user_channel.h"
+#include "manip_chaines.h"
 
 
 
@@ -20,10 +24,23 @@
 
 /* Insert an element in the linked list */
 /*          Always at the end           */
-void add(tlistC * lc, channel * c);
+user create_user(char *msg_command,char *msg_param)
+{
+	
+       user *utulisateur;
+	   if(strcmp(msg_command,"NICK") == 0){
+       utulisateur->nickname=msg_param;
+       }
+       if(strcmp(msg_command,"USER") ==0){
+       utulisateur->username=msg_param;
+       }
+       return *utulisateur;
+}
+	   
+void add(tlistC * lc, channel * c)
 {
 	tchannel * new = calloc(1, sizeof(tchannel));
-	new->channel = c;
+	new->channel = c; 
 
 	if (lc->first == NULL) {
 		lc->first = new;
@@ -33,7 +50,8 @@ void add(tlistC * lc, channel * c);
 		lc->last = new;
 	}
 }
-void add(tlistU * lu, user    * u);
+
+void add1(tlistU * lu, user * u)
 {
 	tuser * new = calloc(1, sizeof(tuser));
 	new->user = u;
@@ -48,7 +66,7 @@ void add(tlistU * lu, user    * u);
 }
 
 /* Delete an element in the linked list */
-void del(tlistC * lc, channel * c);
+void del(tlistC * lc, channel * c)
 {
 	/* lc is empty do nothing */
 	if (lc->first == NULL) {
@@ -71,7 +89,7 @@ void del(tlistC * lc, channel * c);
 		} 
 
 		/* c is found, remove it, and reconnect the list */
-		if (cur->next->channel == ) {
+		if (cur->next->channel ) {
 			/* special case when c is the tail of the list */
 			if (cur->next == lc->last) {
 				lc->last = cur;
@@ -84,7 +102,7 @@ void del(tlistC * lc, channel * c);
 		cur = cur->next;
 	}
 }
-void del(tlistU * lu, user    * u);
+void del1(tlistU * lu, user * u)
 {
 	/* lu is empty do nothing */
 	if (lu->first == NULL) {
@@ -92,7 +110,7 @@ void del(tlistU * lu, user    * u);
 	}
 
 	/* special case when u is the head of the list */
-	if (l->first->user == u) {
+	if (lu->first->user == u) {
 		tuser * succesor = lu->first->next;
 		free(lu->first);
 		lu->first = succesor;
@@ -122,13 +140,13 @@ void del(tlistU * lu, user    * u);
 }
 
 /* Search an element in the linked list */
-channel search(channel * lc, channel * c); // or by the ID ?
+/*channel search(channel * lc, channel * c) // or by the ID ?
 {
 
 }
-user    search(user    * lu, user    * u); // or by the ID ?
+user search1(user * lu, user * u) // or by the ID ?
 {
 
 }
+*/
 
-#endif	// LINKEDLIST_H_INCLUDE
