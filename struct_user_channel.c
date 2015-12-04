@@ -1,7 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/stat.h>
 /* 
  *
  *
@@ -16,14 +12,7 @@
 #include "struct_user_channel.h"
 #include "manip_chaines.h"
 
-
-
-/************************************
- * Linked List manipulation methods *
- ************************************/
-
-/* Insert an element in the linked list */
-/*          Always at the end           */
+/* Create an user */
 user create_user(char *msg_command,char *msg_param)
 {
 	
@@ -37,7 +26,13 @@ user create_user(char *msg_command,char *msg_param)
        return *utulisateur;
 }
 	   
-void add(tlistC * lc, channel * c)
+/************************************
+ * Linked List manipulation methods *
+ ************************************/
+
+/* Insert an element in the linked list */
+/*          Always at the end           */
+void add_channel(tlistC * lc, channel * c)
 {
 	tchannel * new = calloc(1, sizeof(tchannel));
 	new->channel = c; 
@@ -51,7 +46,7 @@ void add(tlistC * lc, channel * c)
 	}
 }
 
-void add1(tlistU * lu, user * u)
+void add_user(tlistU * lu, user * u)
 {
 	tuser * new = calloc(1, sizeof(tuser));
 	new->user = u;
@@ -66,7 +61,7 @@ void add1(tlistU * lu, user * u)
 }
 
 /* Delete an element in the linked list */
-void del(tlistC * lc, channel * c)
+void del_channel(tlistC * lc, channel * c)
 {
 	/* lc is empty do nothing */
 	if (lc->first == NULL) {
@@ -102,7 +97,7 @@ void del(tlistC * lc, channel * c)
 		cur = cur->next;
 	}
 }
-void del1(tlistU * lu, user * u)
+void del_user(tlistU * lu, user * u)
 {
 	/* lu is empty do nothing */
 	if (lu->first == NULL) {

@@ -1,13 +1,11 @@
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/stat.h>
-//#include "init.h"
-
 #ifndef STRUCT_USER_CHANNEL_H
 #define STRUCT_USER_CHANNEL_H
 
+#include "init.h"
+
+/************************************
+ *			   Structures			*
+ ***********************************/
 
 typedef struct {
       char    raw[512];       /* raw copy of the original message           */
@@ -62,18 +60,6 @@ typedef struct tlistC {
 	tchannel * first;
 	tchannel * last;
 }tlistC;
-
-
-
-
-
-
-
-
-
-
-
-
 
 /************************************
  *    User manipulation methods		*
@@ -146,16 +132,16 @@ int update_view_channel(int, int);
 
 /* Insert an element in the linked list */
 /*          Always at the end           */
-void add(tlistC * lc,channel * c);
-void add1(tlistU * lu, user * u);
+void add_channel(tlistC * lc, channel 	* c);
+void add_user	(tlistU * lu, user 		* u);
 
 /* Delete an element in the linked list */
-void del(tlistC * lc, channel * c);
-void del1(tlistU * lu, user * u);
+void del_channel(tlistC * lc, channel 	* c);
+void del_user	(tlistU * lu, user 		* u);
 
 /* Search an element in the linked list */
-channel search(channel * lc, channel * c); // or by the ID ?
-user    search1(user    * lu, user    * u); // or by the ID ?
+channel search_channel	(channel * lc, channel * c); // or by the ID ?
+user    search_user		(user    * lu, user    * u); // or by the ID ?
 
 /* Sort the linked list by name or ID */
 
