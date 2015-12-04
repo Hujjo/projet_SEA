@@ -24,18 +24,7 @@
 
 /* Insert an element in the linked list */
 /*          Always at the end           */
-user create_user(char *msg_command,char *msg_param)
-{
-	
-       user *utulisateur;
-	   if(strcmp(msg_command,"NICK") == 0){
-       utulisateur->nickname=msg_param;
-       }
-       if(strcmp(msg_command,"USER") ==0){
-       utulisateur->username=msg_param;
-       }
-       return *utulisateur;
-}
+
 	   
 void add(tlistC * lc, channel * c)
 {
@@ -138,7 +127,18 @@ void del1(tlistU * lu, user * u)
 		cur = cur->next;
 	}
 }
-
+user create_user(char *msg_command,char *msg_param)
+{
+	
+       user *utulisateur=NULL;
+	   if(strcmp(msg_command,"NICK") == 0){
+       strcpy (msg_param,utulisateur->nickname); // sergmentation fault ici !
+       }
+       if(strcmp(msg_command,"USER") ==0){
+       strcpy(msg_param,utulisateur->username);
+       }
+       return *utulisateur;
+}
 /* Search an element in the linked list */
 /*channel search(channel * lc, channel * c) // or by the ID ?
 {

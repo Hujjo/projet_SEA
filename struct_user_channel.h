@@ -3,28 +3,20 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/stat.h>
-//#include "init.h"
+#include "manip_chaines.h"
 
 #ifndef STRUCT_USER_CHANNEL_H
 #define STRUCT_USER_CHANNEL_H
 
 
-typedef struct {
-      char    raw[512];       /* raw copy of the original message           */
-      char    *prefix;        /* pointer to prefix                          */
-      char    *ident[3];      /* arrays devided prefix (name, user, host)   */
-      char    *command;       /* pointer to command                         */
-      char    *param[15];     /* array of pointer to parsed params          */
-      int     nparams;        /* numnber of params                          */
-      char    *trailing;      /* pointer to trialing                        */
-  } irc_msg;
+
   
 
 /* Structure user */
 typedef struct user {
 	int  *id;
-	char *nickname;
-	char *username;
+	char nickname[30];// on préfefini une longueur de nom
+	char username[30];
 	char *realname;
 	int channel;
 	char *password;
@@ -159,5 +151,4 @@ user    search1(user    * lu, user    * u); // or by the ID ?
 
 /* Sort the linked list by name or ID */
 
-
-#endif	// STRUCT_USER_CHANNEL_H_INCLUDED
+#endif
