@@ -18,10 +18,10 @@ user create_user(char *msg_command,char *msg_param)
 	
        user *utulisateur;
 	   if(strcmp(msg_command,"NICK") == 0){
-       utulisateur->nickname=msg_param;
+      // strcpy(utulisateur->nickname=msg_param; à finir
        }
        if(strcmp(msg_command,"USER") ==0){
-       utulisateur->username=msg_param;
+    //   utulisateur->username=msg_param; à finir
        }
        return *utulisateur;
 }
