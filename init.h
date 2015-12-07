@@ -19,6 +19,12 @@
 #define PUBLIC 1
 #define PRIVATE 0
 
+#define PORT 6667	// port of connection by client
+#define BACKLOG 10	// number of simultanous connection for one socket
+
 // todo : define a new type : boolean
+
+typedef struct sockaddr_in sockaddr_in;
+typedef struct sockaddr sockaddr;
 
 #endif //INIT_H_INCLUDED

@@ -7,9 +7,6 @@
  *			   Structures			*
  ***********************************/
 
-
-  
-
 /* Structure user */
 typedef struct user {
 	int  *id;

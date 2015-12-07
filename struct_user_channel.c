@@ -1,14 +1,3 @@
-/* 
- *
- *
- *
- *
- *
- *
- *
- *
- *
- */
 #include "struct_user_channel.h"
 #include "manip_chaines.h"
 
