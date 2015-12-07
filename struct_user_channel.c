@@ -2,20 +2,9 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/stat.h>
-/* 
- *
- *
- *
- *
- *
- *
- *
- *
- *
- */
+
 #include "struct_user_channel.h"
 #include "manip_chaines.h"
-
 
 
 /************************************
@@ -24,18 +13,7 @@
 
 /* Insert an element in the linked list */
 /*          Always at the end           */
-user create_user(char *msg_command,char *msg_param)
-{
-	
-       user *utulisateur;
-	   if(strcmp(msg_command,"NICK") == 0){
-       utulisateur->nickname=msg_param;
-       }
-       if(strcmp(msg_command,"USER") ==0){
-       utulisateur->username=msg_param;
-       }
-       return *utulisateur;
-}
+
 	   
 void add(tlistC * lc, channel * c)
 {
@@ -51,19 +29,7 @@ void add(tlistC * lc, channel * c)
 	}
 }
 
-void add1(tlistU * lu, user * u)
-{
-	tuser * new = calloc(1, sizeof(tuser));
-	new->user = u;
 
-	if (lu->first == NULL) {
-		lu->first = new;
-		lu->last  = new;
-	} else {
-		lu->last->next = new;
-		lu->last = new;
-	}
-}
 
 /* Delete an element in the linked list */
 void del(tlistC * lc, channel * c)
@@ -144,9 +110,7 @@ void del1(tlistU * lu, user * u)
 {
 
 }
-user search1(user * lu, user * u) // or by the ID ?
-{
+* */
 
-}
-*/
+
 

@@ -12,10 +12,14 @@
 #include "struct_user_channel.h"
 #include "manip_chaines.h"
 
+
 #define PORT 6667  //on definit le port sur lequel le cient il va se connecter au serveur
 #define BACKLOG 10
 
-int main(int argc, char *argv[])
+
+
+
+int main( int argc, const char* argv[] )
 {
 	
 	/*paramètre de connection au client */
@@ -25,8 +29,10 @@ int main(int argc, char *argv[])
     socklen_t size;
     char buffer[10241];
     char buff[3000];
+    tlistU  *lu;
+    tuser *L;
     
-//  memset(buffer,0,sizeof(buffer));
+    //memset(buffer,0,sizeof(buffer));
     int yes =1;
     //char baf[13];
 
@@ -58,6 +64,7 @@ int main(int argc, char *argv[])
         fprintf(stderr, "Listening Failure\n");
         exit(1);
     }
+    
    // dans le cas ou il ya des appels on attentes on passe pour les étapes suivantes
     while(1) {
 		
@@ -97,21 +104,21 @@ int main(int argc, char *argv[])
         //manip_chaines(buffer); <----- à modifer pour faire aapele de fonction 
         
 
-		//create_user(message->command,message->param[0]);
-	
 	    irc_msg *message=NULL;
 		message=(irc_msg*)malloc(sizeof(irc_msg));
 		//msg_string[]=":nick!~hamza@server PRIVMSG #channelisty :apparament ça marche !";
 		parse_message(buffer,message);
 		
-		 printf("\n command: %s \n, pram: %s \n",message->command,message->param[0]);
-        
-
+		printf("prefix:%s  \n ident_name : %s , ident_user: %s ident_host:%s \n command: %s \n, pram: %s \n, nparam: %d \n trailing: %s",message->prefix,message->ident[name],message->ident[user1],message->ident[host],message->command,message->param[0],message->nparams,message->trailing );
+		
+		search1(lu,L,message->param[0]);
+		//create_user(message->command,message->param[0]);
+		
+		
         strcpy(buff,"001");
         // on envoi 001 pour le client pour ---> mode +i l'utulisateur est reconnue que par les utulisateur de meme channel avec /who or 
         // whois
         send(client_fd,(char *)buff, sizeof(buff), 0);
-        
 
       
 	}
@@ -121,5 +128,5 @@ int main(int argc, char *argv[])
 
      
     }
- 
+ return 0;
 }

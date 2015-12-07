@@ -8,17 +8,8 @@
 #ifndef STRUCT_USER_CHANNEL_H
 #define STRUCT_USER_CHANNEL_H
 
-
-typedef struct {
-      char    raw[512];       /* raw copy of the original message           */
-      char    *prefix;        /* pointer to prefix                          */
-      char    *ident[3];      /* arrays devided prefix (name, user, host)   */
-      char    *command;       /* pointer to command                         */
-      char    *param[15];     /* array of pointer to parsed params          */
-      int     nparams;        /* numnber of params                          */
-      char    *trailing;      /* pointer to trialing                        */
-  } irc_msg;
-  
+#include "struct_user_channel.h"
+#include "manip_chaines.h"  
 
 /* Structure user */
 typedef struct user {
@@ -65,16 +56,6 @@ typedef struct tlistC {
 
 
 
-
-
-
-
-
-
-
-
-
-
 /************************************
  *    User manipulation methods		*
  ***********************************/
@@ -85,6 +66,19 @@ typedef struct tlistC {
  * Args 	: int, id of user		*
  ***********************************/
 user create_user(char *msg_command,char *msg_param);
+
+user create_user(char *msg_command,char *msg_param)
+{
+       user utulisateur;
+ 
+	   if(strcmp(msg_command,"NICK") == 0){
+       utulisateur.nickname=msg_param;
+       }
+       if(strcmp(msg_command,"USER") ==0){
+       utulisateur.realname=msg_param;
+       }
+       return utulisateur;
+}
 
 /****************************************
  * To delete an user					*
@@ -102,7 +96,7 @@ int delete_user(int);
  * 			  int, id of channel							*
  * 			  char*, nickname,username,realname,password	*
  ***********************************************************/
-int update_nickname_user(int, char*);
+int update_nickname_user(int , char*);
 int update_username_user(int, char*);
 int update_realname_user(int, char*);
 int update_channel_user (int, int  );
@@ -149,15 +143,48 @@ int update_view_channel(int, int);
 void add(tlistC * lc,channel * c);
 void add1(tlistU * lu, user * u);
 
+void add1(tlistU * lu, user * u)
+{
+	tuser * new = calloc(1, sizeof(tuser));
+	new->user = u;
+
+	if (lu->first == NULL) {
+		lu->first = new;
+		lu->last  = new;
+	} else {
+		lu->last->next = new;
+		lu->last = new;
+	}
+}
+
 /* Delete an element in the linked list */
 void del(tlistC * lc, channel * c);
 void del1(tlistU * lu, user * u);
 
 /* Search an element in the linked list */
 channel search(channel * lc, channel * c); // or by the ID ?
-user    search1(user    * lu, user    * u); // or by the ID ?
+int    search1(tlistU * lu,tuser   *L, user *c); // or by the ID ?
+int search1(tlistU * lu,tuser *L, user *c) // or by the ID ?
+{
+   tuser *tmp;
+  // tuser *LR ;  
+   tmp = L;
+   while( tmp!=NULL)
+    {
+      
+     if (strcmp(tmp->user->nickname,c->nickname)==0)
+       {
+         return 1 ;
+          //tmp = tmp->suivant ;
+       }
+     else
+        tmp = tmp->next;
+    }
+   add1(lu,c);
+   return 0;
+}
 
 /* Sort the linked list by name or ID */
 
 
-#endif	// STRUCT_USER_CHANNEL_H_INCLUDED
+#endif // STRUCT_USER_CHANNEL_H_INCLUDED
