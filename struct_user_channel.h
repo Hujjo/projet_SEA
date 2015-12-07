@@ -1,21 +1,19 @@
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/stat.h>
-//#include "init.h"
-
 #ifndef STRUCT_USER_CHANNEL_H
 #define STRUCT_USER_CHANNEL_H
 
-#include "struct_user_channel.h"
-#include "manip_chaines.h"  
+
+#include "init.h"
+
+/************************************
+ *			   Structures			*
+ ***********************************/
+
 
 /* Structure user */
 typedef struct user {
 	int  *id;
-	char *nickname;
-	char *username;
+	char nickname[9];
+	char username[20];
 	char *realname;
 	int channel;
 	char *password;
@@ -55,7 +53,6 @@ typedef struct tlistC {
 }tlistC;
 
 
-
 /************************************
  *    User manipulation methods		*
  ***********************************/
@@ -67,18 +64,7 @@ typedef struct tlistC {
  ***********************************/
 user create_user(char *msg_command,char *msg_param);
 
-user create_user(char *msg_command,char *msg_param)
-{
-       user utulisateur;
- 
-	   if(strcmp(msg_command,"NICK") == 0){
-       utulisateur.nickname=msg_param;
-       }
-       if(strcmp(msg_command,"USER") ==0){
-       utulisateur.realname=msg_param;
-       }
-       return utulisateur;
-}
+
 
 /****************************************
  * To delete an user					*
@@ -140,8 +126,8 @@ int update_view_channel(int, int);
 
 /* Insert an element in the linked list */
 /*          Always at the end           */
-void add(tlistC * lc,channel * c);
-void add1(tlistU * lu, user * u);
+void add_channel(tlistC * lc, channel 	* c);
+void add_user	(tlistU * lu, user 		* u);
 
 void add1(tlistU * lu, user * u)
 {
@@ -158,10 +144,11 @@ void add1(tlistU * lu, user * u)
 }
 
 /* Delete an element in the linked list */
-void del(tlistC * lc, channel * c);
-void del1(tlistU * lu, user * u);
+void del_channel(tlistC * lc, channel 	* c);
+void del_user	(tlistU * lu, user 		* u);
 
 /* Search an element in the linked list */
+
 channel search(channel * lc, channel * c); // or by the ID ?
 int    search1(tlistU * lu,tuser   *L, user *c); // or by the ID ?
 int search1(tlistU * lu,tuser *L, user *c) // or by the ID ?
