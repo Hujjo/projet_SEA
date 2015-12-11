@@ -137,12 +137,12 @@ int search_user(tlistU * lu, tuser *L, user *u)
 	while( tmp!=NULL)
 	{
 
-		if (strcmp(tmp->user->nickname,c->nickname)==0)
+		if (strcmp(tmp->user->nickname,u->nickname)==0)
 			return 1 ;
 		else
 			tmp = tmp->next;
 	}
-	add_user(lu,c);
+	add_user(lu,u);
 	return 0;
 }
 
