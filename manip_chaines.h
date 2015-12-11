@@ -22,9 +22,4 @@ typedef struct
 	char    *trailing;      /* pointer to trialing                        */
 } irc_msg;
 
-
-
-
-
-
 #endif

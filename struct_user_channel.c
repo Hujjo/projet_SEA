@@ -5,15 +5,16 @@
 user create_user(char *msg_command,char *msg_param)
 {
 	
-       user *utulisateur;
+       user *utilisateur=NULL;
 	   if(strcmp(msg_command,"NICK") == 0){
       // strcpy(utulisateur->nickname=msg_param; à finir
        }
        if(strcmp(msg_command,"USER") ==0){
-    //   utulisateur->username=msg_param; à finir
+     // utulisateur->username=msg_param; à finir
        }
-       return *utulisateur;
+       return *utilisateur;
 }
+
 	   
 /************************************
  * Linked List manipulation methods *
@@ -35,18 +36,11 @@ void add_channel(tlistC * lc, channel * c)
 	}
 }
 
+
 void add_user(tlistU * lu, user * u)
 {
 	tuser * new = calloc(1, sizeof(tuser));
 	new->user = u;
-
-	if (lu->first == NULL) {
-		lu->first = new;
-		lu->last  = new;
-	} else {
-		lu->last->next = new;
-		lu->last = new;
-	}
 }
 
 /* Delete an element in the linked list */
@@ -128,9 +122,7 @@ void del_user(tlistU * lu, user * u)
 {
 
 }
-user search1(user * lu, user * u) // or by the ID ?
-{
+* */
 
-}
-*/
+
 
