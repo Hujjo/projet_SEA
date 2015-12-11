@@ -63,8 +63,6 @@ typedef struct tlistC {
  ***********************************/
 user create_user(char *msg_command,char *msg_param);
 
-
-
 /****************************************
  * To delete an user					*
  * Return 	: 1 if deleting successfull	*
@@ -128,20 +126,6 @@ int update_view_channel(int, int);
 void add_channel(tlistC * lc, channel 	* c);
 void add_user	(tlistU * lu, user 		* u);
 
-void add1(tlistU * lu, user * u)
-{
-	tuser * new = calloc(1, sizeof(tuser));
-	new->user = u;
-
-	if (lu->first == NULL) {
-		lu->first = new;
-		lu->last  = new;
-	} else {
-		lu->last->next = new;
-		lu->last = new;
-	}
-}
-
 /* Delete an element in the linked list */
 void del_channel(tlistC * lc, channel 	* c);
 void del_user	(tlistU * lu, user 		* u);
@@ -149,26 +133,17 @@ void del_user	(tlistU * lu, user 		* u);
 /* Search an element in the linked list */
 
 channel search(channel * lc, channel * c); // or by the ID ?
-int    search1(tlistU * lu,tuser   *L, user *c); // or by the ID ?
-int search1(tlistU * lu,tuser *L, user *c) // or by the ID ?
-{
-   tuser *tmp;
-  // tuser *LR ;  
-   tmp = L;
-   while( tmp!=NULL)
-    {
-      
-     if (strcmp(tmp->user->nickname,c->nickname)==0)
-       {
-         return 1 ;
-          //tmp = tmp->suivant ;
-       }
-     else
-        tmp = tmp->next;
-    }
-   add1(lu,c);
-   return 0;
-}
+
+/************************************************
+ * Search an user in a list of user				*
+ * If user does not exist, add it in the list	*
+ * Return	TRUE if user exist					*
+ * 			FALSE if user does not exist		*
+ * Args		list of tuser						*
+ * 			tuser								*
+ * 			user								*
+ ************************************************/
+int search_user(tlistU * lu, tuser *L, user *u);
 
 /* Sort the linked list by name or ID */
 
