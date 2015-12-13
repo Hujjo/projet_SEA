@@ -83,7 +83,7 @@ int parse_message(char *msg_string, irc_msg *message)
 
 void affiche_parsed_message( irc_msg* message)
 {
-			printf("prefix:%s  \n ident_name : %s , ident_user: %s ident_host:%s \n command: %s \n, pram: %s \n, nparam: %d \n trailing: %s",message->prefix,message->ident[name],message->ident[user1],message->ident[host],message->command,message->param[0],message->nparams,message->trailing );
+			printf("prefix:%s  \n ident_name : %s , ident_user: %s ident_host:%s \n command: %s \n pram: %s nparam: %d \n trailing: %s\n\n",message->prefix,message->ident[name],message->ident[user1],message->ident[host],message->command,message->param[0],message->nparams,message->trailing );
 
 }
 
