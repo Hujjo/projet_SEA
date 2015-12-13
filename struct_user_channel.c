@@ -1,40 +1,21 @@
-
-
-/************************************
- * Linked List manipulation methods *
- ************************************/
-
-/* Insert an element in the linked list */
-/*          Always at the end           */
-/* 
- *
- *
- *
- *
- *
- *
- *
- *
- *
- */
 #include "struct_user_channel.h"
 #include "manip_chaines.h"
 
 /* Create an user */
 user create_user(char *msg_command,char *msg_param)
 {
-	
-       user *utilisateur=NULL;
-	   if(strcmp(msg_command,"NICK") == 0){
-      // strcpy(utulisateur->nickname=msg_param; à finir
-       }
-       if(strcmp(msg_command,"USER") ==0){
-     // utulisateur->username=msg_param; à finir
-       }
-       return *utilisateur;
+
+	user *utilisateur=NULL;
+	if(strcmp(msg_command,"NICK") == 0){
+		// strcpy(utulisateur->nickname=msg_param; à finir
+	}
+	if(strcmp(msg_command,"USER") ==0){
+		// utulisateur->username=msg_param; à finir
+	}
+	return *utilisateur;
 }
 
-	   
+
 /************************************
  * Linked List manipulation methods *
  ************************************/
@@ -55,11 +36,18 @@ void add_channel(tlistC * lc, channel * c)
 	}
 }
 
-
 void add_user(tlistU * lu, user * u)
 {
 	tuser * new = calloc(1, sizeof(tuser));
 	new->user = u;
+
+	if (lu->first == NULL) {
+		lu->first = new;
+		lu->last  = new;
+	} else {
+		lu->last->next = new;
+		lu->last = new;
+	}
 }
 
 /* Delete an element in the linked list */
@@ -137,11 +125,24 @@ void del_user(tlistU * lu, user * u)
 }
 
 /* Search an element in the linked list */
-/*channel search(channel * lc, channel * c) // or by the ID ?
+channel search(channel * lc, channel * c) // or by the ID ?
 {
 
 }
-* */
 
+int search_user(tlistU * lu, tuser *L, user *u)
+{
+	tuser *tmp;
+	tmp = L;
+	while( tmp!=NULL)
+	{
 
+		if (strcmp(tmp->user->nickname,u->nickname)==0)
+			return 1 ;
+		else
+			tmp = tmp->next;
+	}
+	add_user(lu,u);
+	return 0;
+}
 

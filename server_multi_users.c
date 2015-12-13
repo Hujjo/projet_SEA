@@ -79,7 +79,7 @@
 				
 					
 			while(1) {
-			if( pthread_create( &thread_id , NULL ,  connection_handler , (void*) &client_fd) < 0)
+			if( pthread_create( &thread_id , NULL ,  connection_plusieurs , (void*) &client_fd) < 0)
 			{
 				perror("could not create thread");
 				return 1;
