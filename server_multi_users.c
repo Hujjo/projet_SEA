@@ -3,38 +3,30 @@
 	#include "manip_chaines.h"
 	#include "server_functions.h"
 
-	#define PORT 6667  //Port number
-	#define BACKLOG 10
-
-
 	void *connection_plusieurs(void *client_fd);
 
 	int main( int argc, const char* argv[] )
 	{
-		
 		/*Connection parameters variables */
 		struct sockaddr_in server;
 		struct sockaddr_in dest;
 		int socket_fd=0;int client_fd=0;
 		socklen_t size;
 		pthread_t thread_id;
-
-		
 		int yes =1; 
+
 		/*Socket creation*/ 
 		socket_fd = createSocket(socket_fd, yes, server, dest);
 
 		/* define connexion parameters : port,host,ect ... */
-		
 		server.sin_family = AF_INET;
 		server.sin_port = htons(PORT);
 		server.sin_addr.s_addr = INADDR_ANY;
 		
 		/*bind socket c'est à dire associcer la socket à notre adresse local*/
-		 
 		doBind(socket_fd, server);	
+
 		/* Listen :*/
-		
 		listenAConnection(socket_fd);
 		
 		/* If we have listener*/

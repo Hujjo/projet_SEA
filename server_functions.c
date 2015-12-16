@@ -47,3 +47,5 @@ void listenAConnection(int socket_fd){
 		exit(1);
 	}
 }
+
+void acceptAConnection(int 
