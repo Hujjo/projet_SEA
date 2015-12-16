@@ -51,6 +51,17 @@ typedef struct tlistC {
 	tchannel * last;
 }tlistC;
 
+/* Struture regrouping all structures types which will be passed to thread */
+typedef struct thread_args {
+	user userinfos;
+	int client_fd;
+	tuser userinlist;
+	tlistU listofusers;
+	channel channelinfos;
+	tchannel channelinlist;
+	tlistC channellist;
+} thread_args;
+	
 
 /************************************
  *    User manipulation methods		*
