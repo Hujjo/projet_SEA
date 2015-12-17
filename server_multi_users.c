@@ -3,15 +3,7 @@
 	#include "manip_chaines.h"
 	#include "server_functions.h"
 
-<<<<<<< HEAD
-	void *connection_plusieurs(void *client_fd);
-=======
-	#define PORT 6667  //Port number
-	#define BACKLOG 10
-
-
 	void *connection_plusieurs(void*);
->>>>>>> 73e4c84a03d92bd8f873e1f5f7cc8910159bb73b
 
 	int main( int argc, const char* argv[] )
 	{
