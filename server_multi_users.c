@@ -68,6 +68,8 @@
 		char buff[3000];
 		int num =0;
 		thread_args *my_list_args = (thread_args*)list_args;
+		tuser *L=NULL;
+        user *c=NULL;
 		while(1){
 			num= recv(my_list_args->client_fd, buffer, 10240,0);
 			if (num == -1) {
@@ -86,9 +88,20 @@
 			message=(irc_msg*)malloc(sizeof(irc_msg));
 			parse_message(buffer,message);
 			affiche_parsed_message ( message);
-			if (strcmp(message->command,"NICK")==0)
+			
+			if ( user_connexion(my_list_args->lu,L,c,message->param[0],message->trailing,message->command) == 0 )
+			{
+            
+				strcpy(buff,"SORRY THIS NICKNAME EXIST");
+           	
+            
+			}
+			else if(user_connexion(my_list_args->lu,L,c,message->param[0],message->trailing,message->command) != 0) {
+			
 				strcpy(buff,"001\n");
-			/* on envoi 001 pour le client pour ---> mode +i l'utulisateur est reconnue que par les utilisateurs de meme channel avec /who or whois*/
+			}
+
+
 			send(my_list_args->client_fd,(char *)buff, sizeof(buff), 0);
 			}
 		}

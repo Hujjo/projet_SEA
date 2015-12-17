@@ -20,7 +20,7 @@ typedef struct user {
 
 /* User in a linked list of users */
 typedef struct tuser {
-	user * user;
+	user * users;
 	struct tuser * next;
 }tuser;
 
@@ -32,10 +32,8 @@ typedef struct tlistU {
 
 /* Structure channel */
 typedef struct channel {
-	int id;
 	char * name ;
 	tlistU * userlist;
-	int view;
 }channel;
 
 /* Channel in a linked list of channels */
@@ -56,7 +54,7 @@ typedef struct thread_args {
 	user userinfos;
 	int client_fd;
 	tuser userinlist;
-	tlistU listofusers;
+	tlistU lu;
 	channel channelinfos;
 	tchannel channelinlist;
 	tlistC channellist;
@@ -66,13 +64,18 @@ typedef struct thread_args {
 /************************************
  *    User manipulation methods		*
  ***********************************/
-
+ /*******************************************************
+ * To create an user				                    *
+ * Return 	: int            	                    	*
+ * Args 	: tlistU, tuser, user,char*,char*,char*		*
+ ********************************************************/
+int user_connexion(tlistU lu,tuser *L,user *c,char *msg_param1,char *msg_param2,char *msg_command);
 /************************************
  * To create an user				*
  * Return 	: pointer on user		*
  * Args 	: int, id of user		*
  ***********************************/
-user create_user(char *msg_command,char *msg_param);
+user *create_user(char *msg_command,char *msg_param1 , char *msg_param2);
 
 /****************************************
  * To delete an user					*
@@ -135,7 +138,7 @@ int update_view_channel(int, int);
 /* Insert an element in the linked list */
 /*          Always at the end           */
 void add_channel(tlistC * lc, channel 	* c);
-void add_user	(tlistU * lu, user 		* u);
+void add_user(tlistU *lu, user * u,tuser *new);
 
 /* Delete an element in the linked list */
 void del_channel(tlistC * lc, channel 	* c);

@@ -43,11 +43,11 @@ int parse_message(char *msg_string, irc_msg *message)
 		}
 
 		/* params */
-		message->param[0] = strtok(ptr, " "); /* \r\n ? */
+		message->param[0] = strtok(ptr," "); /* \r\n ? */
 		if(message->param[0] != NULL)
 		{
 			int i;
-			for(i = 1; i < MAX_PARAMS; ++i)
+			for(i = 1; i < 2; ++i)
 			{
 				ptr = strtok(NULL, " ");
 				if(ptr == NULL) break;
@@ -83,8 +83,14 @@ int parse_message(char *msg_string, irc_msg *message)
 
 void affiche_parsed_message( irc_msg* message)
 {
-			printf("prefix:%s  \n ident_name : %s , ident_user: %s ident_host:%s \n command: %s \n pram: %s nparam: %d \n trailing: %s\n\n",message->prefix,message->ident[name],message->ident[user1],message->ident[host],message->command,message->param[0],message->nparams,message->trailing );
-
+	printf("Prefix:%s  \n************* \n",message->prefix);
+	printf("	ident_name : %s\n************* \n" , message->ident[name]);
+	printf("	ident_user: %s\n************* \n", message->ident[user1]);
+	printf("	ident_host:%s \n************* \n", message->ident[host]);
+	printf("Command: %s \n************* \n",message->command);
+	printf("	First Parameter: %s\n************* \n", message->param[0]);
+	printf("	Number of parameters: %d \n************* \n",message->nparams);
+	printf("	trailing: %s\n************* \n", message->trailing );
 }
 
 	
