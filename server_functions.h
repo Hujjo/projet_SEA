@@ -12,4 +12,7 @@ void doBind(int,sockaddr_in);
 // Function to listen calling clients
 void listenAConnection(int);
 
+// Function to accept a client
+//int acceptAConnection(int,int,struct sockaddr*,struct socklen_t*);
+
 #endif	// SERVER_FUNCTIONS_H_INCLUDED

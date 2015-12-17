@@ -47,3 +47,12 @@ void listenAConnection(int socket_fd){
 		exit(1);
 	}
 }
+/*
+int acceptAConnection(int client_fd, int socket_fd, (struct sockaddr*) &dest, (struct socklen_t*) &size) {
+	client_fd = accept(socket_fd,(struct sockaddr*)&dest,(struct socklen_t*)&size);
+	if(client_fd == -1) {
+		perror("not accept");
+		exit(1);
+	}
+	return client_fd;
+}*/
