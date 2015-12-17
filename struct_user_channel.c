@@ -13,20 +13,19 @@
 #include "struct_user_channel.h"
 #include "manip_chaines.h"
 
-/* Create an user */
 user *create_user(char *msg_command,char *msg_param1 , char *msg_param2)
 {
 	
-	user *utilisateur = malloc(sizeof(utilisateur));
+	user *nouvutilisateur = malloc(sizeof(nouvutilisateur));
 
 	if(strcmp(msg_command,"NICK") == 0){
 			   
-		strcpy(utilisateur->nickname,msg_param1);	
-		strcpy(utilisateur->username,msg_param2);
+		strcpy(nouvutilisateur->nickname,msg_param1);	
+		strcpy(nouvutilisateur->username,msg_param2);
        
 	}
       
-	return  utilisateur;
+	return  nouvutilisateur;
 }
    
 /************************************
@@ -49,12 +48,7 @@ void add_channel(tlistC * lc, channel * c)
 	}
 }
 
-/*void add_user(tlistU * lu, user * u)
-{
-	tuser * new = calloc(1, sizeof(tuser));
-	new->user = u;
-}*/
-
+/*Add a new user to a list*/
 
 void add_user(tlistU *lu, user * u,tuser *new)
 {
@@ -196,37 +190,22 @@ int search1(tlistU *lu,tuser *L,user *c,char *identifiant,char *msg_command) // 
    return 0;
 }
 
-int user_connexion(tlistU lu,tuser *L,user *c,char *msg_param1,char *msg_param2,char *msg_command) {
+int user_connexion(tlistU lu,tuser *L,user *c,char *msg_param1,char *msg_param2,char *msg_command){
 	 
-     tuser *new = calloc(1, sizeof(tuser));
-     user  * utu1 = malloc(sizeof(*utu1));
-  
-  
-     	
-   
-      /*if ( search1(lu,L,c,msg_param1,msg_command) == 1 ) 
-	     {
-			printf("l'identifant %s existe  \n",msg_param1);
-            return 0;
-		 } */
-   
-    
-          utu1 = create_user(msg_command,
-		                       msg_param1,
-		                       msg_param2);
-		                     
-		add_user(&lu,utu1,new);
-		  
-		  
-			/*printf("%s",lu->first->users->nickname);
-			  printf("%s",lu->last->users->nickname);*/
-			
-		    
-            //printf("l'identifant %s n'existe pas \n",msg_param1);
-		   	
-		    return 1;
-	         
-     }
+	tuser *new = calloc(1, sizeof(tuser));
+	user  * utu1 = malloc(sizeof(*utu1));
+
+	/*if ( search1(lu,L,c,msg_param1,msg_command) == 1 ) 
+	{
+		printf("l'identifant %s existe  \n",msg_param1);
+		return 0;
+	} */
+
+	utu1 = create_user(msg_command, msg_param1,msg_param2);		 
+	add_user(&lu,utu1,new);
+	return 1;
+
+}
      
 void ini_tlistU(tlistU *lu) {
 	

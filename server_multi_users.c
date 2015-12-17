@@ -90,7 +90,8 @@
            	
             
 			}
-			else if(user_connexion(my_list_args->lu,L,c,message->param[0],message->trailing,message->command) != 0) {
+			else
+			{ 	//user ok , and send welcome numeric
 			
 				strcpy(buff,"001\n");
 			}

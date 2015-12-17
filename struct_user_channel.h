@@ -69,11 +69,12 @@ typedef struct thread_args {
  * Return 	: int            	                    	*
  * Args 	: tlistU, tuser, user,char*,char*,char*		*
  ********************************************************/
+ /*connecting user by checking first if the name exists, if not add him ( problem in searching)*/
 int user_connexion(tlistU lu,tuser *L,user *c,char *msg_param1,char *msg_param2,char *msg_command);
 /************************************
  * To create an user				*
  * Return 	: pointer on user		*
- * Args 	: int, id of user		*
+	                                *
  ***********************************/
 user *create_user(char *msg_command,char *msg_param1 , char *msg_param2);
 
